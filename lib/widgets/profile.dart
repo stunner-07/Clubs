@@ -1,5 +1,7 @@
+import 'package:club/model/user_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'curvebtn.dart';
 
@@ -180,6 +182,7 @@ class ProfileWidget extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
+                          if(Provider.of<User>(context).user==1)
                           buttonContainer(
                               color: Colors.orange, name: 'Connect'),
                         ],

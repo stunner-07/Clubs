@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import 'model/topic_of_focus.dart';
 import 'model/user_type.dart';
 
 void main() {
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: User(),
         ),
+        ChangeNotifierProvider.value(
+          value: TopicsList(),
+        ),
       ],
       child: MaterialApp(
         title: 'Widhya App',
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
         ),
         home: Login(),
         routes: {
-          MainPage.route:(ctx)=>MainPage(),
+          MainPage.route: (ctx) => MainPage(),
         },
       ),
     );
