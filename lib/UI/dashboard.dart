@@ -7,6 +7,7 @@ import '../widgets/profile.dart';
 import '../widgets/project.dart';
 
 class MainPage extends StatelessWidget {
+  static const route = '/dashboard';
   @override
   Widget build(BuildContext context) {
     final _media = MediaQuery.of(context).size;
@@ -120,12 +121,16 @@ class MainPage extends StatelessWidget {
                           height: 35.0,
                           width: 100.0,
                           child: Center(
-                            child: Text(
-                              'Logout',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'WorkSans-SemiBold.ttf',
+                            child: GestureDetector(
+                              onTap: () => Navigator.of(context)
+                                  .pushReplacementNamed('/'),
+                              child: Text(
+                                'Logout',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'WorkSans-SemiBold.ttf',
+                                ),
                               ),
                             ),
                           ),
