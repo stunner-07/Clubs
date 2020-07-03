@@ -1,3 +1,4 @@
+import 'package:club/model/clubs_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:club/widgets/topics.dart';
@@ -8,6 +9,13 @@ import '../widgets/project.dart';
 
 class MainPage extends StatelessWidget {
   static const route = '/dashboard';
+  Details club = Details(
+      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
+      'Widhya\'s Club',
+      'College Name ,Location ',
+      25,
+      ['Anurag', 'Satya', 'Rahul'],
+      'This is a great club !!!!!');
   @override
   Widget build(BuildContext context) {
     final _media = MediaQuery.of(context).size;
@@ -44,9 +52,7 @@ class MainPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                ProfileWidget(
-                  media: _media,
-                ),
+                ProfileWidget(),
                 SizedBox(height: 50),
                 Padding(
                   padding: const EdgeInsets.only(left: 25.0),
@@ -245,25 +251,22 @@ class MainPage extends StatelessWidget {
                                     SizedBox(
                                       height: 25,
                                     ),
-                                    Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Icon(Icons.info),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                            '      Widhya is an EdTech startup that focuses on'),
-                                      ],
+                                    SizedBox(
+                                      width: 5,
                                     ),
-                                    Text(
-                                        'helping students become industry ready'),
-                                    SizedBox(height: 5),
-                                    Text(
-                                        '   by adopting "Learning By Doing" approach'),
+                                    Flexible(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Text(
+                                          'An essay is, generally, a piece of writing that gives the author\'s own argument — but the definition is vague, overlapping with those of a paper, an article, a pamphlet, and a short story. Essays have traditionally been sub-classified as formal and informal.',
+                                          softWrap: true,
+                                          style: TextStyle(
+                                            fontSize: 14.0,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                     SizedBox(
                                       height: 20,
                                     ),
@@ -297,7 +300,7 @@ class MainPage extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          'Rohan Avlur (President)',
+                                          club.memName[0],
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[800],
@@ -318,7 +321,7 @@ class MainPage extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          'NS Raghav (Secretary)',
+                                          club.memName[1],
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[800],
@@ -341,7 +344,7 @@ class MainPage extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          'Sriker (Vice-President)',
+                                          club.memName[2],
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[800],

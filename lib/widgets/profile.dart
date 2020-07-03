@@ -1,3 +1,4 @@
+import 'package:club/model/clubs_detail.dart';
 import 'package:club/model/user_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +7,13 @@ import 'package:provider/provider.dart';
 import 'curvebtn.dart';
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({
-    Key key,
-    @required Size media,
-  })  : _media = media,
-        super(key: key);
-
-  final Size _media;
+  Details club = Details(
+      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
+      'Widhya\'s Club',
+      'College Name ,Location ',
+      25,
+      ['Anurag', 'Satya', 'Rahul'],
+      'This is a great club !!!!!');
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class ProfileWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
         color: Colors.white,
         child: Container(
-          height: 500,
+          height: 450,
           width: 350,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
@@ -48,13 +49,16 @@ class ProfileWidget extends StatelessWidget {
                             flex: 4,
                             child: Container(
                               decoration: BoxDecoration(
-                                // image: DecorationImage(
-                                //   fit: BoxFit.fitHeight,
-                                //   image: AssetImage(
-                                //     'images/About.jpg',
-                                //   ),
-                                // ),
-                                color: Colors.grey,
+                                border: Border.all(
+                                  width: 1,
+                                  color: Colors.black45,
+                                ),
+                                borderRadius: BorderRadius.circular(25),
+                                image: DecorationImage(
+                                    fit: BoxFit.fitHeight,
+                                    image: NetworkImage(
+                                        'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4')),
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -73,14 +77,20 @@ class ProfileWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(
+                      height: 30,
+                    ),
                     Row(
                       children: [
-                        SizedBox(
-                          width: 25,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: Icon(Icons.cloud),
                         ),
-                        Icon(Icons.cloud),
+                        SizedBox(
+                          width: 15,
+                        ),
                         Text(
-                          '  Widhya\'s Club',
+                          club.name,
                           style: TextStyle(
                             fontSize: 24,
                             color: Colors.black87,
@@ -88,39 +98,6 @@ class ProfileWidget extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Icon(Icons.info),
-                        Text(
-                          '    Anurag Tekale',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 55.0),
-                      child: Text(
-                        'I\'m Pursuing my B.Tech\nfrom Mahindra Ecole Centrale',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -135,7 +112,7 @@ class ProfileWidget extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          'Hyderabad',
+                          club.collegeName,
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey,
@@ -157,7 +134,7 @@ class ProfileWidget extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          'No of Members: (x)',
+                          club.noMem.toString(),
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.red,
@@ -182,9 +159,9 @@ class ProfileWidget extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Spacer(),
-                          if(Provider.of<User>(context).user==1)
-                          buttonContainer(
-                              color: Colors.orange, name: 'Connect'),
+                          if (Provider.of<User>(context).user == 0)
+                            buttonContainer(
+                                color: Colors.orange, name: 'Connect'),
                         ],
                       ),
                     ),

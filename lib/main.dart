@@ -1,5 +1,6 @@
 import 'package:club/UI/dashboard.dart';
 import 'package:club/UI/sample_login.dart';
+import 'package:club/model/clubs_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -23,6 +24,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: TopicsList(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ClubDetail(),
         ),
       ],
       child: MaterialApp(
