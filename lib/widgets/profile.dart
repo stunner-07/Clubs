@@ -7,16 +7,17 @@ import 'package:provider/provider.dart';
 import 'curvebtn.dart';
 
 class ProfileWidget extends StatelessWidget {
-  Details club = Details(
-      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
-      'Widhya\'s Club',
-      'College Name ,Location ',
-      25,
-      ['Anurag', 'Satya', 'Rahul'],
-      'This is a great club !!!!!');
+  // Details(
+  //     'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
+  //     'Widhya\'s Club',
+  //     'College Name ,Location ',
+  //     25,
+  //     ['Anurag', 'Satya', 'Rahul'],
+  //     'This is a great club !!!!!');
 
   @override
   Widget build(BuildContext context) {
+    Details club = Provider.of<ClubDetail>(context).currentClub;
     return Padding(
       padding: const EdgeInsets.only(top: 80.0, left: 30),
       child: Material(

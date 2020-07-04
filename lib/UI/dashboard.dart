@@ -2,373 +2,407 @@ import 'package:club/model/clubs_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:club/widgets/topics.dart';
+import 'package:provider/provider.dart';
 import '../widgets/chartcard.dart';
 import '../widgets/comment.dart';
 import '../widgets/profile.dart';
 import '../widgets/project.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   static const route = '/dashboard';
-  Details club = Details(
-      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
-      'Widhya\'s Club',
-      'College Name ,Location ',
-      25,
-      ['Anurag', 'Satya', 'Rahul'],
-      'This is a great club !!!!!');
+
+  @override
+  _MainPageState createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  // @override
+  // void initState() {
+  //   Provider.of<ClubDetail>(context, listen: false).fetchClub();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    Details club = Provider.of<ClubDetail>(context).currentClub;
     final _media = MediaQuery.of(context).size;
     print(_media);
-    return Material(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    Image.network(
-                      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
-                      height: 50,
-                      width: 50,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      'Widhya',
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Color(0xff1b1e44),
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                ProfileWidget(),
-                SizedBox(height: 50),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: Container(
-                    child: Topics(),
-                    decoration: BoxDecoration(
-                      color: Colors.orange[50],
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    height: 350,
-                    width: 350,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            width: 55,
-          ),
-          Container(
-            color: Colors.grey[300],
-            height: double.infinity,
-            width: 1,
-          ),
-          Flexible(
-            fit: FlexFit.loose,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(
-                  height: 55,
-                  width: _media.width,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          width: 650,
-                        ),
-                        FlatButton(
-                          hoverColor: Colors.red[300],
-                          onPressed: () {},
-                          child: Text(
-                            'DashBoard',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'WorkSans-SemiBold.ttf',
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 15),
-                        FlatButton(
-                          hoverColor: Colors.red[300],
-                          onPressed: () {},
-                          child: Text(
-                            'Requests',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'WorkSans-SemiBold.ttf',
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 35.0,
-                          width: 100.0,
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () => Navigator.of(context)
-                                  .pushReplacementNamed('/'),
-                              child: Text(
-                                'Logout',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'WorkSans-SemiBold.ttf',
-                                ),
-                              ),
-                            ),
-                          ),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              border: Border.all(
-                                  color: Color(0xFFFB4C47), width: 1.5)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.only(
-                        top: 20, left: 20, right: 20, bottom: 20),
+    return FutureBuilder(
+        future: Provider.of<ClubDetail>(context).fetchClub(),
+        builder: (ctx, snapshot) {
+          return snapshot.connectionState == ConnectionState.waiting
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Material(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 750.0),
-                                  child: Text(
-                                    'Widhya\'s Club',
-                                    style: TextStyle(
-                                      fontSize: 35,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Image.network(
+                                  'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
+                                  height: 50,
+                                  width: 50,
                                 ),
                                 SizedBox(
-                                  height: 15,
+                                  width: 10,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 825.0),
-                                  child: Text(
-                                    'Hello, Welcome Back !',
-                                    style: TextStyle(
-                                        color: Colors.grey[600], fontSize: 15),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 100,
-                                ),
-                                IntrinsicHeight(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            ChartCardTile(
-                                              cardColor: Colors.lightBlue[50],
-                                              cardTitle: '\nClub Events',
-                                              subText: ' June 2020',
-                                              events:
-                                                  '\n1) : Hackathon - 2020\n\n2) : Internship-Drive - July 2020',
-                                              icon: Icons.pie_chart,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          width: 50,
-                                        ),
-                                        CommentWidget(media: _media),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 40,
+                                Text(
+                                  'Widhya',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      color: Color(0xff1b1e44),
+                                      fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
-                            // QuickContact(media: _media)
+                            ProfileWidget(),
+                            SizedBox(height: 50),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 25.0),
+                              child: Container(
+                                child: Topics(),
+                                decoration: BoxDecoration(
+                                  color: Colors.orange[50],
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                height: 350,
+                                width: 350,
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      IntrinsicHeight(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 35.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Container(
-                                padding: EdgeInsets.only(
-                                  top: 20,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  color: Colors.lightBlue[50],
-                                ),
-                                height: _media.height / 1.8,
-                                width: _media.width / 3.5,
-                                child: Column(
+                      SizedBox(
+                        width: 55,
+                      ),
+                      Container(
+                        color: Colors.grey[300],
+                        height: double.infinity,
+                        width: 1,
+                      ),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 55,
+                              width: _media.width,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      'About the Club',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
+                                    SizedBox(
+                                      width: 650,
+                                    ),
+                                    FlatButton(
+                                      hoverColor: Colors.red[300],
+                                      onPressed: () {},
+                                      child: Text(
+                                        'DashBoard',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'WorkSans-SemiBold.ttf',
+                                          fontSize: 18,
+                                        ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 25,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Flexible(
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          'An essay is, generally, a piece of writing that gives the author\'s own argument — but the definition is vague, overlapping with those of a paper, an article, a pamphlet, and a short story. Essays have traditionally been sub-classified as formal and informal.',
-                                          softWrap: true,
-                                          style: TextStyle(
-                                            fontSize: 14.0,
-                                            height: 1.5,
-                                          ),
+                                    SizedBox(width: 15),
+                                    FlatButton(
+                                      hoverColor: Colors.red[300],
+                                      onPressed: () {},
+                                      child: Text(
+                                        'Requests',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'WorkSans-SemiBold.ttf',
+                                          fontSize: 18,
                                         ),
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 20,
+                                      width: 20,
                                     ),
                                     Container(
-                                      height: 1,
-                                      width: double.infinity,
-                                      color: Colors.grey[400],
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      'Club Members',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
+                                      height: 35.0,
+                                      width: 100.0,
+                                      child: Center(
+                                        child: GestureDetector(
+                                          onTap: () => Navigator.of(context)
+                                              .pushReplacementNamed('/'),
+                                          child: Text(
+                                            'Logout',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily:
+                                                  'WorkSans-SemiBold.ttf',
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        CircleAvatar(
-                                          radius: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          club.memName[0],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey[800],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        CircleAvatar(
-                                          radius: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          club.memName[1],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey[800],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 15,
-                                        ),
-                                        CircleAvatar(
-                                          radius: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          club.memName[2],
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.grey[800],
-                                          ),
-                                        ),
-                                      ],
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          border: Border.all(
+                                              color: Color(0xFFFB4C47),
+                                              width: 1.5)),
                                     ),
                                   ],
                                 ),
                               ),
-                              SizedBox(width: 50),
-                              ProjectWidget(media: _media),
-                            ],
-                          ),
+                            ),
+                            Expanded(
+                              child: ListView(
+                                padding: EdgeInsets.only(
+                                    top: 20, left: 20, right: 20, bottom: 20),
+                                children: <Widget>[
+                                  IntrinsicHeight(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 750.0),
+                                              child: Text(
+                                                'Widhya\'s Club',
+                                                style: TextStyle(
+                                                  fontSize: 35,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 825.0),
+                                              child: Text(
+                                                'Hello, Welcome Back !',
+                                                style: TextStyle(
+                                                    color: Colors.grey[600],
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 100,
+                                            ),
+                                            IntrinsicHeight(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 5),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: <Widget>[
+                                                        ChartCardTile(
+                                                          cardColor: Colors
+                                                              .lightBlue[50],
+                                                          cardTitle:
+                                                              '\nClub Events',
+                                                          subText: ' June 2020',
+                                                          events:
+                                                              '\n1) : Hackathon - 2020\n\n2) : Internship-Drive - July 2020',
+                                                          icon: Icons.pie_chart,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      width: 50,
+                                                    ),
+                                                    CommentWidget(
+                                                        media: _media),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 40,
+                                            ),
+                                          ],
+                                        ),
+                                        // QuickContact(media: _media)
+                                      ],
+                                    ),
+                                  ),
+                                  IntrinsicHeight(
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 35.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            padding: EdgeInsets.only(
+                                              top: 20,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(30),
+                                              color: Colors.lightBlue[50],
+                                            ),
+                                            height: _media.height / 1.8,
+                                            width: _media.width / 3.5,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  'About the Club',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 25,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            15.0),
+                                                    child: Text(
+                                                      'An essay is, generally, a piece of writing that gives the author\'s own argument — but the definition is vague, overlapping with those of a paper, an article, a pamphlet, and a short story. Essays have traditionally been sub-classified as formal and informal.',
+                                                      softWrap: true,
+                                                      style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        height: 1.5,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Container(
+                                                  height: 1,
+                                                  width: double.infinity,
+                                                  color: Colors.grey[400],
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Text(
+                                                  'Club Members',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 15,
+                                                    ),
+                                                    CircleAvatar(
+                                                      radius: 20,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      club.memName[0],
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 15,
+                                                    ),
+                                                    CircleAvatar(
+                                                      radius: 20,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      club.memName[1],
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 15,
+                                                    ),
+                                                    CircleAvatar(
+                                                      radius: 20,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 10,
+                                                    ),
+                                                    Text(
+                                                      club.memName[2],
+                                                      style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(width: 50),
+                                          ProjectWidget(media: _media),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                );
+        });
   }
 }
