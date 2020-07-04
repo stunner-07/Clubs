@@ -8,27 +8,16 @@ import '../widgets/comment.dart';
 import '../widgets/profile.dart';
 import '../widgets/project.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   static const route = '/dashboard';
 
   @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  // @override
-  // void initState() {
-  //   Provider.of<ClubDetail>(context, listen: false).fetchClub();
-  //   super.initState();
-  // }
-
-  @override
   Widget build(BuildContext context) {
-    Details club = Provider.of<ClubDetail>(context).currentClub;
+    var club = Provider.of<ClubDetail>(context);
     final _media = MediaQuery.of(context).size;
     print(_media);
     return FutureBuilder(
-        future: Provider.of<ClubDetail>(context).fetchClub(),
+        future: club.fetchClub(),
         builder: (ctx, snapshot) {
           return snapshot.connectionState == ConnectionState.waiting
               ? Center(
@@ -291,7 +280,7 @@ class _MainPageState extends State<MainPage> {
                                                         const EdgeInsets.all(
                                                             15.0),
                                                     child: Text(
-                                                      'An essay is, generally, a piece of writing that gives the author\'s own argument — but the definition is vague, overlapping with those of a paper, an article, a pamphlet, and a short story. Essays have traditionally been sub-classified as formal and informal.',
+                                                      club.currentClub.shortdes,
                                                       softWrap: true,
                                                       style: TextStyle(
                                                         fontSize: 14.0,
@@ -333,7 +322,8 @@ class _MainPageState extends State<MainPage> {
                                                       width: 10,
                                                     ),
                                                     Text(
-                                                      club.memName[0],
+                                                      club.currentClub
+                                                          .memName[0],
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.grey[800],
@@ -354,7 +344,8 @@ class _MainPageState extends State<MainPage> {
                                                       width: 10,
                                                     ),
                                                     Text(
-                                                      club.memName[1],
+                                                      club.currentClub
+                                                          .memName[1],
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.grey[800],
@@ -377,7 +368,8 @@ class _MainPageState extends State<MainPage> {
                                                       width: 10,
                                                     ),
                                                     Text(
-                                                      club.memName[2],
+                                                      club.currentClub
+                                                          .memName[2],
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                         color: Colors.grey[800],

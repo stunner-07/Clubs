@@ -8,7 +8,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Row(
-       mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           RaisedButton(
             onPressed: () {
@@ -21,7 +21,7 @@ class Login extends StatelessWidget {
             width: 30,
           ),
           RaisedButton(
-            onPressed: (){
+            onPressed: () {
               Provider.of<User>(context, listen: false).studentLogin();
               Navigator.of(context).pushReplacementNamed(MainPage.route);
             },

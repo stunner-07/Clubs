@@ -38,15 +38,8 @@ class Details {
 }
 
 class ClubDetail with ChangeNotifier {
-  Details _currentClub = Details(
-      'https://media-exp1.licdn.com/dms/image/C510BAQFj2IOVxDuVQA/company-logo_200_200/0?e=2159024400&v=beta&t=BRAxOREbvXrWT_z3F2OePswp1I7FuH0xMBQ1ZBslwL4',
-      'Widhya\'s Club',
-      'College Name ,Location ',
-      25,
-      ['Anurag', 'Satya', 'Rahul'],
-      'This is a great club !!!!!');
+  Details _currentClub;
   Details get currentClub {
-    print(_currentClub.collegeName);
     return _currentClub;
   }
 
@@ -57,8 +50,6 @@ class ClubDetail with ChangeNotifier {
     _myDoc.documents.forEach((element) async {
       _currentClub = (Details.fromMap(element.data));
     });
-    // print(_currentClub.memName[0]);
-    //notifyListeners();
   }
 
   Map<String, double> pieChartData = {
